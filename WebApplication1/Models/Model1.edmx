@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="10.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EMP">
+          <Key>
+            <PropertyRef Name="EMPNO" />
+          </Key>
+          <Property Name="EMPNO" Type="number" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="ENAME" Type="varchar2" MaxLength="10" />
+          <Property Name="JOB" Type="varchar2" MaxLength="9" />
+          <Property Name="MGR" Type="number" Precision="4" Scale="0" />
+          <Property Name="HIREDATE" Type="date" />
+          <Property Name="SAL" Type="number" Precision="7" Scale="2" />
+          <Property Name="COMM" Type="number" Precision="7" Scale="2" />
+          <Property Name="DEPTNO" Type="number" Precision="2" Scale="0" Nullable="false" />
+        </EntityType>
+        <Association Name="EMP_SELF_KEY">
+          <End Role="EMP" Type="Self.EMP" Multiplicity="0..1" />
+          <End Role="EMP1" Type="Self.EMP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMP">
+              <PropertyRef Name="EMPNO" />
+            </Principal>
+            <Dependent Role="EMP1">
+              <PropertyRef Name="MGR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="EMP" EntityType="Self.EMP" Schema="PSL" store:Type="Tables" />
+          <AssociationSet Name="EMP_SELF_KEY" Association="Self.EMP_SELF_KEY">
+            <End Role="EMP" EntitySet="EMP" />
+            <End Role="EMP1" EntitySet="EMP" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EMP">
+          <Key>
+            <PropertyRef Name="EMPNO" />
+          </Key>
+          <Property Name="EMPNO" Type="Int16" Nullable="false" />
+          <Property Name="ENAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="JOB" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="MGR" Type="Int16" />
+          <Property Name="HIREDATE" Type="DateTime" />
+          <Property Name="SAL" Type="Decimal" Precision="7" Scale="2" />
+          <Property Name="COMM" Type="Decimal" Precision="7" Scale="2" />
+          <Property Name="DEPTNO" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="EMP1" Relationship="Self.EMP_SELF_KEY" FromRole="EMP" ToRole="EMP1" />
+          <NavigationProperty Name="EMP2" Relationship="Self.EMP_SELF_KEY" FromRole="EMP1" ToRole="EMP" />
+        </EntityType>
+        <Association Name="EMP_SELF_KEY">
+          <End Role="EMP" Type="Self.EMP" Multiplicity="0..1" />
+          <End Role="EMP1" Type="Self.EMP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMP">
+              <PropertyRef Name="EMPNO" />
+            </Principal>
+            <Dependent Role="EMP1">
+              <PropertyRef Name="MGR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OracleEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EMPs" EntityType="Self.EMP" />
+          <AssociationSet Name="EMP_SELF_KEY" Association="Self.EMP_SELF_KEY">
+            <End Role="EMP" EntitySet="EMPs" />
+            <End Role="EMP1" EntitySet="EMPs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="OracleEntities">
+          <EntitySetMapping Name="EMPs">
+            <EntityTypeMapping TypeName="Model.EMP">
+              <MappingFragment StoreEntitySet="EMP">
+                <ScalarProperty Name="EMPNO" ColumnName="EMPNO" />
+                <ScalarProperty Name="ENAME" ColumnName="ENAME" />
+                <ScalarProperty Name="JOB" ColumnName="JOB" />
+                <ScalarProperty Name="MGR" ColumnName="MGR" />
+                <ScalarProperty Name="HIREDATE" ColumnName="HIREDATE" />
+                <ScalarProperty Name="SAL" ColumnName="SAL" />
+                <ScalarProperty Name="COMM" ColumnName="COMM" />
+                <ScalarProperty Name="DEPTNO" ColumnName="DEPTNO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
